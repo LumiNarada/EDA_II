@@ -31,6 +31,8 @@
 
 #include <math.h>
 
+int g_contador = 0;
+
 void print( int* list, size_t tam, char* msg )
 {
 	printf( "%s", msg );
@@ -57,6 +59,7 @@ void collect( int list[], Queue* queues[], int radix )
 			Queue_Dequeue( queues[ i ], &value); 
 			list[ index ] = value;
 			++index;
+			++g_contador;
 		}
 	}
 }
@@ -71,26 +74,34 @@ void radix_sort( int list[], size_t elems, int pos, int radix )
 		{
 			int whichQ = subKey( list[ j ], i, radix );
 			Queue_Enqueue( queues[ whichQ ], list[ j ] );
+			++g_contador;
 		}
 		collect( list, queues, radix );
 	}
 }
-#define NUM_ELEMS 7
+
+void radixsort10( int list[], size_t elems ){
+	radix_sort(list, elems, 4, 10);
+}
+
+#define NUM_ELEMS 5000
 
 int main()
 {
 	Item list[ NUM_ELEMS ];
 
 	for( size_t i = 0; i < NUM_ELEMS; ++i ){
-        //numeros aleatorios
     	list[ i ] = rand() % 4000;
 	}
 
 	print( list, NUM_ELEMS, "Antes: " );
 
-	radix_sort(list, NUM_ELEMS, 3, 10);
+	radixsort10(list, NUM_ELEMS );
+	//radix_sort(list, NUM_ELEMS, 4, 10);
 	
-	print( list, NUM_ELEMS, "Después: " );
+	print( list, NUM_ELEMS, "\nDespués: " );
+
+	printf("Contador: %d", g_contador);
 	
 }
 

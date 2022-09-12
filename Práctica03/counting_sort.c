@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+int g_contador = 0;
+
 int max( int list[], size_t elems )
 {   
     int max = list[0];
@@ -49,52 +51,54 @@ void print( int* list, size_t tam, char* msg )
  * @param low    Índice al primer elemento de la lista.
  * @param high   Índice al último elemento de la lista.
  */
-void counting_sort( int list[], size_t elems, size_t low, size_t high )
+void counting_sort( int list[], size_t elems, int low, int high )
 {
-    int capacity = high + 1;
+    size_t capacity = high - low + 1;
     int aux[capacity];
     
     for( size_t i = 0; i < capacity; i++){
 		aux[i]=0;
 	}
-    //int output[elems];
     
     for (size_t i = 0; i <= elems-1; i++)
     {
-        int pos = list[ i ];
+        int pos = list[ i ]-low;
         aux[ pos ]++;
+        ++g_contador;
     }
+
     int j = 0;
     
     for (size_t value = 0; value <= capacity-1; value++){
         for (size_t reps = aux[value]; reps >= 1; reps--){
-            list [j] = value;
+            list [j] = value+low;
             ++ j;
+            ++g_contador;
         }
     }
-    // Codigo para tipos compuestos 
-    /**for ( ccxzt i = 1, i <= capacity-1; ++1)
-    {
-        aux[ i ] += aux[ i - 1 ];
-    }
-    
-    for (size_t i = elems-1; i > 0; --i)
-    {
-        int j = key( list[ i ] );
-        aux[ j ] -= 1;
-        output[ aux[ j ] x|] = list[ i ];
-    }**/
 }
 
-#define NUM_ELEMS 7
+void CountingSort( int list[], size_t elems ){
+    counting_sort(list, elems, min(list, elems), max(list, elems));
+}
+
+#define NUM_ELEMS 5000
 
 int main()
 {
-	int list[ NUM_ELEMS ] = {1, 4, 1, 2, 7, 5, 2};
+	int list[ NUM_ELEMS ];
+
+    for( size_t i = 0; i < NUM_ELEMS; ++i ){
+    	//numeros negativos
+        list[ i ] = (rand()%(21))+5;
+	}
+
 
 	print( list, NUM_ELEMS, "Antes: " );
 
-	counting_sort(list, NUM_ELEMS, min(list, NUM_ELEMS), max(list, NUM_ELEMS));
+	CountingSort(list, NUM_ELEMS);
 
 	print( list, NUM_ELEMS, "Después: " );
+
+    printf("Contador: %d", g_contador);
 }
