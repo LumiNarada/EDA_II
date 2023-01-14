@@ -30,8 +30,6 @@ Library* Lib_New(){
             printf("error creando la lista");
         }
 
-        printf("Tabla creada");
-
     }
     return lib;
 }
