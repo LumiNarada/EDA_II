@@ -14,13 +14,6 @@ void YamlB_serialize(ListNB* lnb){
     n = lnb->Start;
 
     while(n!=NULL){
-
-        fprintf(output, "%s: \n", n->book->Name);
-        fprintf(output, "  genero: %s\n", n->book->Category);
-        fprintf(output, "  Nombre: %s\n", n->book->F_name);
-        fprintf(output, "  apellido: %s\n", n->book->L_name);
-        fprintf(output, "  Stock: %d\n", n->book->stock);
-
         cont++;
         n = n->next;
     }
@@ -45,19 +38,18 @@ ListNB* YamlB_unSerialize(){
 
         fgets(line,100,input);
         strncpy(name,line,strlen(line)-1);
-        printf("%s",name);
+
         fgets(line,100,input);
         strncpy(ctg,line+10,strlen(line)-1);
-        printf("\n%s",ctg);
+
         fgets(line,100,input);
         strncpy(fn,line+10,strlen(line)-1);
-        printf("%s",fn);
+
         fgets(line,100,input);
         strncpy(ln,line+12,strlen(line)-1);
-        printf("%s",ln);
+
         fgets(line,100,input);
         strncpy(stock,line+9,strlen(line)-1);
-        printf("%s",stock);
 
         fgets(line,100,input);
 

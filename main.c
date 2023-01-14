@@ -6,7 +6,7 @@
 
 int main(){
     Library* ada = Lib_New();
-    Library_serialize(ada);
+    Library_unserialize(ada);
 
     int n, opcion;
     do
@@ -35,7 +35,7 @@ int main(){
 
          }
     } while ( opcion != 4 );
-    Library_unserialize(ada);
+    Library_serialize(ada);
     return 0;
 }
 
